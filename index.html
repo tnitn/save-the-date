@@ -5,14 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Save the Date!</title>
-
-    <!-- Elegant fonts -->
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:wght@400;600&display=swap"
         rel="stylesheet">
 
     <style>
-        /* ---------- BASIC PAGE ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -36,7 +33,6 @@
             position: relative;
         }
 
-        /* ---------- SPARKLY BACKGROUND (full page) ---------- */
         #bg-sparkles {
             position: fixed;
             top: 0;
@@ -47,7 +43,6 @@
             z-index: 0;
         }
 
-        /* ---------- FLIP CARD ---------- */
         .card {
             perspective: 1000px;
             width: 540px;
@@ -87,7 +82,6 @@
             overflow: hidden;
         }
 
-        /* ---------- SILVER METALLIC CARD ---------- */
         .card-front,
         .card-back {
             background: linear-gradient(135deg, #e8e8e8, #c0c0c0, #d4d4d4);
@@ -99,13 +93,11 @@
             transform: rotateY(180deg);
         }
 
-        /* ---------- TEXT STYLES ---------- */
         h1 {
             font-family: 'Cinzel', serif;
             font-size: 2.4rem;
             color: #111;
             margin-bottom: 1.5rem;
-            /* ← BIGGER GAP */
             text-shadow: 0 2px 4px rgba(255, 255, 255, .8);
         }
 
@@ -124,30 +116,6 @@
             text-align: center;
         }
 
-        a {
-            color: #6a329f;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        a:hover {
-            color: #6a329f;
-        }
-
-        /* ---------- RSVP HIGHLIGHT BOX ---------- */
-        .rsvp-box {
-            margin-top: 20px;
-            padding: 14px 20px;
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid #000000;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-            color: #000000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        /* ---------- SPARKLES ON CARD ---------- */
         .sparkle {
             position: absolute;
             width: 4px;
@@ -180,56 +148,121 @@
 
 <body>
 
-    <!-- Sparkly background -->
     <canvas id="bg-sparkles"></canvas>
 
     <div class="card" id="flipCard">
         <div class="card-inner">
             <!-- FRONT -->
             <div class="card-front">
-                <h1>Save the Date!</h1>
+                <h1 data-key="save-the-date">Save the Date!</h1>
                 <h2>Anita & Dimi</h2>
-                <p>April 17, 2026</p>
-                <p style="margin-top:20px; font-style:italic; color:#555;">Tap to open</p>
+                <p data-key="wedding-date">17 April 2026</p>
+                <p style="margin-top:20px; font-style:italic; color:#555;" data-key="tap-to-open">Tap to open</p>
             </div>
 
             <!-- BACK -->
             <div class="card-back">
-                <h2>Dear <span id="guest-name">Guest</span>,</h2>
-                <p>We are pleased to invite you to our wedding</p>
-                <p>Date: April 17, 2026</p>
-                <p>Time: 14:00</p>
-                <p>Place:<br>
-                    Standesamt München-Pasing,<br>
-                    Landsberger Straße 486, 81241 München
-                </p>
-
-                <!-- Highlighted RSVP -->
-                <div class="rsvp-box">
-                    Please RSVP via this <a href="https://forms.gle/YOUR_GOOGLE_FORM_LINK"
-                        target="_blank">questionnaire</a><br>
-                        <b>before <u>01.12.2025</u></b>
-                </div>
+                <h2><span data-key="dear">Dear</span> <span id="guest-names">Guest</span>,</h2>
+                <p data-key="invitation">We are pleased to invite you to our wedding</p>
+                <p data-key="date">Date: 17 April 2026</p>
+                <p data-key="time">Time: 14:00</p>
+                <p data-key="place">Place:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München</p>
             </div>
         </div>
     </div>
 
     <script>
-        /* ---------- FLIP ON CLICK ---------- */
-        const card = document.getElementById('flipCard');
-        card.addEventListener('click', () => {
-            card.classList.toggle('flipped');
+        // ——— TRANSLATIONS (SINGULAR + PLURAL) ———
+        const translations = {
+            en: {
+                dear: { s: "Dear", p: "Dear" },
+                invitation: { s: "We are pleased to invite you to our wedding", p: "We are pleased to invite you both to our wedding" },
+                "save-the-date": "Save the Date!",
+                "wedding-date": "17 April 2026",
+                "tap-to-open": "Tap to open",
+                "date": "Date: 17 April 2026",
+                "time": "Time: 14:00",
+                "place": "Place:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München"
+            },
+            de: {
+                dear: { s: "Liebe/r", p: "Liebe/r" },
+                invitation: { s: "Wir laden dich herzlich zu unserer Hochzeit ein", p: "Wir laden euch herzlich zu unserer Hochzeit ein" },
+                "save-the-date": "Merke den Termin vor!",
+                "wedding-date": "17. April 2026",
+                "tap-to-open": "Tippe zum Öffnen",
+                "date": "Datum: 17. April 2026",
+                "time": "Uhrzeit: 14:00",
+                "place": "Ort:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München"
+            },
+            ru: {
+                dear: { s: "Дорогой/Дорогая", p: "Дорогие" },
+                invitation: { s: "Мы с радостью приглашаем тебя на нашу свадьбу", p: "Мы с радостью приглашаем вас на нашу свадьбу" },
+                "save-the-date": "Сохрани дату!",
+                "wedding-date": "17 апреля 2026",
+                "tap-to-open": "Нажми, чтобы открыть",
+                "date": "Дата: 17 апреля 2026",
+                "time": "Время: 14:00",
+                "place": "Место:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München"
+            },
+            el: {
+                dear: { s: "Αγαπητέ/Αγαπητή", p: "Αγαπητοί" },
+                invitation: { s: "Σε προσκαλούμε με χαρά στο γάμο μας", p: "Σας προσκαλούμε με χαρά στο γάμο μας" },
+                "save-the-date": "Κράτα την ημερομηνία!",
+                "wedding-date": "17 Απριλίου 2026",
+                "tap-to-open": "Πάτησε για να ανοίξει",
+                "date": "Ημερομηνία: 17 Απριλίου 2026",
+                "time": "Ώρα: 14:00",
+                "place": "Τοποθεσία:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München"
+            }
+        };
+
+        // ——— GET GUESTS & LANGUAGE ———
+        const params = new URLSearchParams(location.search);
+        const lang = params.get('lang') || 'en';
+        const guest1 = params.get('guest') || 'Guest';
+        const guest2 = params.get('guest2') || '';
+        const guest3 = params.get('guest3') || '';
+
+        // Build guest names list
+        let guestNames = [guest1];
+        if (guest2) guestNames.push(guest2);
+        if (guest3) guestNames.push(guest3);
+
+        const isPlural = guestNames.length > 1;
+        const displayNames = guestNames
+            .map(name => decodeURIComponent(name).replace(/\+/g, ' '))
+            .join(isPlural ? (guestNames.length > 2 ? ', ' : ' & ') : '');
+
+        // Fix Oxford comma for 3+ names
+        if (isPlural && guestNames.length > 2) {
+            const parts = displayNames.split(', ');
+            const last = parts.pop();
+            displayNames = parts.join(', ') + ' & ' + last;
+        }
+
+        document.getElementById('guest-names').textContent = displayNames;
+
+        // ——— APPLY LANGUAGE (SINGULAR/PLURAL) ———
+        document.querySelectorAll('[data-key]').forEach(el => {
+            const key = el.dataset.key;
+            const t = translations[lang]?.[key];
+            if (t) {
+                if (typeof t === 'object' && (t.s || t.p)) {
+                    el.innerHTML = isPlural ? (t.p || t.s) : t.s;
+                } else {
+                    el.innerHTML = t;
+                }
+            }
         });
 
-        /* ---------- GUEST NAME FROM URL ---------- */
-        const guestSpan = document.getElementById('guest-name');
-        const guest = new URLSearchParams(location.search).get('guest') || 'Guest';
-        guestSpan.textContent = decodeURIComponent(guest).replace(/\+/g, ' ');
+        // ——— FLIP CARD ———
+        document.getElementById('flipCard').addEventListener('click', () => {
+            document.getElementById('flipCard').classList.toggle('flipped');
+        });
 
-        /* ---------- SPARKLE ENGINE: ON CARD ---------- */
+        // ——— SPARKLES ON CARD ———
         const front = document.querySelector('.card-front');
         const back = document.querySelector('.card-back');
-
         function createCardSparkle(container) {
             const s = document.createElement('div');
             s.className = 'sparkle';
@@ -241,23 +274,17 @@
             container.appendChild(s);
             setTimeout(() => s.remove(), 2000);
         }
-
         [front, back].forEach(side => {
             setInterval(() => createCardSparkle(side), 300);
             for (let i = 0; i < 30; i++) createCardSparkle(side);
         });
 
-        /* ---------- SPARKLE ENGINE: BACKGROUND ---------- */
+        // ——— SPARKLY BACKGROUND ———
         const canvas = document.getElementById('bg-sparkles');
         const ctx = canvas.getContext('2d');
         let particles = [];
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resize();
-        window.addEventListener('resize', resize);
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resize(); window.addEventListener('resize', resize);
 
         class Particle {
             constructor() { this.reset(); }
@@ -272,28 +299,19 @@
                 this.opacity = 1;
             }
             update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life++;
+                this.x += this.speedX; this.y += this.speedY; this.life++;
                 this.opacity = 1 - (this.life / this.maxLife);
-                if (this.life > this.maxLife || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
+                if (this.life > this.maxLife || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
             }
             draw() {
                 ctx.globalAlpha = this.opacity;
                 ctx.fillStyle = '#ffffff';
-                ctx.shadowBlur = 6;
-                ctx.shadowColor = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.shadowBlur = 6; ctx.shadowColor = '#ffffff';
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
                 ctx.shadowBlur = 0;
             }
         }
-
         for (let i = 0; i < 100; i++) particles.push(new Particle());
-
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
