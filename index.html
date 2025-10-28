@@ -116,6 +116,28 @@
             text-align: center;
         }
 
+        a {
+            color: #6a329f;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            color: #6a329f;
+        }
+
+        .rsvp-box {
+            margin-top: 20px;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #000000;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            color: #000000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
         .sparkle {
             position: absolute;
             width: 4px;
@@ -155,8 +177,8 @@
             <!-- FRONT -->
             <div class="card-front">
                 <h1 data-key="save-the-date">Save the Date!</h1>
-                <h2>Anita & Dimi</h2>
-                <p data-key="wedding-date">17 April 2026</p>
+                <h2 data-key="couple">Anita & Dimi</h2>
+                <p data-key="wedding-date">April 17, 2026</p>
                 <p style="margin-top:20px; font-style:italic; color:#555;" data-key="tap-to-open">Tap to open</p>
             </div>
 
@@ -164,9 +186,16 @@
             <div class="card-back">
                 <h2><span data-key="dear">Dear</span> <span id="guest-names">Guest</span>,</h2>
                 <p data-key="invitation">We are pleased to invite you to our wedding</p>
-                <p data-key="date">Date: 17 April 2026</p>
+                <p data-key="date">Date: April 17, 2026</p>
                 <p data-key="time">Time: 14:00</p>
                 <p data-key="place">Place:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München</p>
+
+                <!-- RSVP: FIXED TEXT (same for 1 or more guests) -->
+                <div class="rsvp-box" data-key="rsvp">
+                    Please RSVP via this <a href="https://forms.gle/YOUR_GOOGLE_FORM_LINK"
+                        target="_blank">questionnaire,<br>
+                        <b>before <u>01.12.2025</u></b></a>
+                </div>
             </div>
         </div>
     </div>
@@ -175,44 +204,52 @@
         // ——— TRANSLATIONS (SINGULAR + PLURAL) ———
         const translations = {
             en: {
+                "save-the-date": "Save the Date!",
+                "couple": "Anita & Dimi",
+                "wedding-date": "April 17, 2026",
+                "tap-to-open": "Tap to open",
                 dear: { s: "Dear", p: "Dear" },
                 invitation: { s: "We are pleased to invite you to our wedding", p: "We are pleased to invite you both to our wedding" },
-                "save-the-date": "Save the Date!",
-                "wedding-date": "17 April 2026",
-                "tap-to-open": "Tap to open",
-                "date": "Date: 17 April 2026",
+                "date": "Date: April 17, 2026",
                 "time": "Time: 14:00",
-                "place": "Place:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München"
+                "place": "Place:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München",
+                "rsvp": "Please RSVP via this <a href=\"https://forms.gle/YOUR_GOOGLE_FORM_LINK\" target=\"_blank\">questionnaire,<br><b>before <u>01.12.2025</u></b></a>"
             },
             de: {
-                dear: { s: "Liebe/r", p: "Liebe/r" },
-                invitation: { s: "Wir laden dich herzlich zu unserer Hochzeit ein", p: "Wir laden euch herzlich zu unserer Hochzeit ein" },
                 "save-the-date": "Merke den Termin vor!",
+                "couple": "Anita & Dimi",
                 "wedding-date": "17. April 2026",
                 "tap-to-open": "Tippe zum Öffnen",
+                dear: { s: "Liebe/r", p: "Liebe/r" },
+                invitation: { s: "Wir laden dich herzlich zu unserer Hochzeit ein", p: "Wir laden euch herzlich zu unserer Hochzeit ein" },
                 "date": "Datum: 17. April 2026",
                 "time": "Uhrzeit: 14:00",
-                "place": "Ort:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München"
+                "place": "Ort:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München",
+                "rsvp": "Bitte melde dich hier an: <a href=\"https://forms.gle/YOUR_GOOGLE_FORM_LINK\" target=\"_blank\">Fragebogen,<br><b>vor dem <u>01.12.2025</u></b></a>"
             },
             ru: {
-                dear: { s: "Дорогой/Дорогая", p: "Дорогие" },
-                invitation: { s: "Мы с радостью приглашаем тебя на нашу свадьбу", p: "Мы с радостью приглашаем вас на нашу свадьбу" },
                 "save-the-date": "Сохрани дату!",
+                "couple": "Анита и Дими",
                 "wedding-date": "17 апреля 2026",
                 "tap-to-open": "Нажми, чтобы открыть",
+                dear: { s: "Дорогой/Дорогая", p: "Дорогие" },
+                invitation: { s: "Мы с радостью приглашаем тебя на нашу свадьбу", p: "Мы с радостью приглашаем вас на нашу свадьбу" },
                 "date": "Дата: 17 апреля 2026",
                 "time": "Время: 14:00",
-                "place": "Место:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München"
+                "place": "Место:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München",
+                "rsvp": "Пожалуйста, подтверди участие здесь: <a href=\"https://forms.gle/YOUR_GOOGLE_FORM_LINK\" target=\"_blank\">анкета,<br><b>до <u>01.12.2025</u></b></a>"
             },
             el: {
-                dear: { s: "Αγαπητέ/Αγαπητή", p: "Αγαπητοί" },
-                invitation: { s: "Σε προσκαλούμε με χαρά στο γάμο μας", p: "Σας προσκαλούμε με χαρά στο γάμο μας" },
                 "save-the-date": "Κράτα την ημερομηνία!",
+                "couple": "Άνιτα & Ντίμι",
                 "wedding-date": "17 Απριλίου 2026",
                 "tap-to-open": "Πάτησε για να ανοίξει",
+                dear: { s: "Αγαπητέ/Αγαπητή", p: "Αγαπητοί" },
+                invitation: { s: "Σε προσκαλούμε με χαρά στο γάμο μας", p: "Σας προσκαλούμε με χαρά στο γάμο μας" },
                 "date": "Ημερομηνία: 17 Απριλίου 2026",
                 "time": "Ώρα: 14:00",
-                "place": "Τοποθεσία:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München"
+                "place": "Τοποθεσία:<br>Standesamt München-Pasing,<br>Landsberger Straße 486, 81241 München",
+                "rsvp": "Παρακαλούμε απάντησε εδώ: <a href=\"https://forms.gle/YOUR_GOOGLE_FORM_LINK\" target=\"_blank\">ερωτηματολόγιο,<br><b>πριν τις <u>01.12.2025</u></b></a>"
             }
         };
 
@@ -223,7 +260,6 @@
         const guest2 = params.get('guest2') || '';
         const guest3 = params.get('guest3') || '';
 
-        // Build guest names list
         let guestNames = [guest1];
         if (guest2) guestNames.push(guest2);
         if (guest3) guestNames.push(guest3);
@@ -233,7 +269,6 @@
             .map(name => decodeURIComponent(name).replace(/\+/g, ' '))
             .join(isPlural ? (guestNames.length > 2 ? ', ' : ' & ') : '');
 
-        // Fix Oxford comma for 3+ names
         if (isPlural && guestNames.length > 2) {
             const parts = displayNames.split(', ');
             const last = parts.pop();
@@ -242,28 +277,31 @@
 
         document.getElementById('guest-names').textContent = displayNames;
 
-        // ——— APPLY LANGUAGE (SINGULAR/PLURAL) ———
+        // ——— APPLY LANGUAGE ———
         document.querySelectorAll('[data-key]').forEach(el => {
             const key = el.dataset.key;
             const t = translations[lang]?.[key];
+
             if (t) {
-                if (typeof t === 'object' && (t.s || t.p)) {
-                    el.innerHTML = isPlural ? (t.p || t.s) : t.s;
-                } else {
+                // RSVP and static text: use string directly
+                if (typeof t === 'string') {
                     el.innerHTML = t;
+                }
+                // dear & invitation: use s/p
+                else if (typeof t === 'object' && (t.s || t.p)) {
+                    el.innerHTML = isPlural ? (t.p || t.s) : t.s;
                 }
             }
         });
 
-        // ——— FLIP CARD ———
+        // ——— FLIP, SPARKLES, BACKGROUND ———
         document.getElementById('flipCard').addEventListener('click', () => {
             document.getElementById('flipCard').classList.toggle('flipped');
         });
 
-        // ——— SPARKLES ON CARD ———
         const front = document.querySelector('.card-front');
         const back = document.querySelector('.card-back');
-        function createCardSparkle(container) {
+        function createCardSparkle(c) {
             const s = document.createElement('div');
             s.className = 'sparkle';
             const size = Math.random() * 3 + 2;
@@ -271,7 +309,7 @@
             s.style.left = Math.random() * 100 + '%';
             s.style.top = Math.random() * 100 + '%';
             s.style.animationDelay = Math.random() * 1.5 + 's';
-            container.appendChild(s);
+            c.appendChild(s);
             setTimeout(() => s.remove(), 2000);
         }
         [front, back].forEach(side => {
@@ -279,12 +317,11 @@
             for (let i = 0; i < 30; i++) createCardSparkle(side);
         });
 
-        // ——— SPARKLY BACKGROUND ———
         const canvas = document.getElementById('bg-sparkles');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        resize(); window.addEventListener('resize', resize);
+        function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+        resize(); addEventListener('resize', resize);
 
         class Particle {
             constructor() { this.reset(); }
