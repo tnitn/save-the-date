@@ -5,10 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Save the Date!</title>
-    <!-- We'll add CSS here in the next step -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:wght@400;600&display=swap');
 
+    <!-- Elegant fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ---------- BASIC PAGE ---------- */
         * {
             margin: 0;
             padding: 0;
@@ -17,48 +21,34 @@
 
         body {
             font-family: 'Playfair Display', serif;
-            background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+            background: #f4f4f4;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             overflow: hidden;
-            position: relative;
         }
 
-        /* Sparkles Background */
-        #sparkles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Flip Card */
+        /* ---------- FLIP CARD ---------- */
         .card {
             perspective: 1000px;
             width: 340px;
             height: 480px;
-            z-index: 10;
+            cursor: pointer;
+            position: relative;
         }
 
         .card-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            text-align: center;
-            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: transform 0.8s cubic-bezier(.25, .8, .25, 1);
             transform-style: preserve-3d;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             border-radius: 16px;
-            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, .25);
         }
 
-        .card:hover .card-inner,
-        .card.clicked .card-inner {
+        .card.flipped .card-inner {
             transform: rotateY(180deg);
         }
 
@@ -74,88 +64,106 @@
             align-items: center;
             padding: 30px;
             border-radius: 16px;
-            background: linear-gradient(135deg, #e5e5e5, #c0c0c0, #d4d4d4);
-            box-shadow:
-                inset 0 0 30px rgba(255, 255, 255, 0.6),
-                0 8px 32px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
         }
 
-        .card-front {
-            background: linear-gradient(135deg, #f0f0f0, #d0d0d0);
-            color: #333;
+        /* ---------- SILVER METALLIC CARD ---------- */
+        .card-front,
+        .card-back {
+            background: linear-gradient(135deg,
+                    #e8e8e8,
+                    /* light silver */
+                    #c0c0c0,
+                    /* mid silver   */
+                    #d4d4d4);
+            /* highlight   */
+            box-shadow:
+                inset 0 0 40px rgba(255, 255, 255, .7),
+                0 8px 20px rgba(0, 0, 0, .3);
             border: 1px solid #aaa;
         }
 
-        .card-front h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 2.4em;
-            color: #1a1a1a;
-            text-shadow: 0 2px 4px rgba(255, 255, 255, 0.8);
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .card-front p {
-            font-size: 1.3em;
-            color: #444;
-            font-weight: 600;
-        }
-
         .card-back {
-            background: linear-gradient(135deg, #f8f8f8, #e0e0e0);
-            color: #222;
             transform: rotateY(180deg);
-            border: 1px solid #999;
         }
 
-        .card-back h2 {
+        /* ---------- TEXT STYLES ---------- */
+        h1 {
             font-family: 'Cinzel', serif;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            color: #1a1a1a;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+            font-size: 2.4rem;
+            color: #111;
+            margin-bottom: .5rem;
+            text-shadow: 0 2px 4px rgba(255, 255, 255, .8);
         }
 
-        .card-back p {
-            font-size: 1.1em;
-            margin: 12px 0;
-            line-height: 1.6;
-            color: #333;
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.9rem;
+            margin-bottom: 1rem;
+            color: #111;
         }
 
-        .card-back a {
+        p {
+            font-size: 1.1rem;
+            color: #222;
+            line-height: 1.5;
+            margin: .4rem 0;
+        }
+
+        a {
             color: #b71c1c;
-            font-weight: bold;
             text-decoration: none;
             border-bottom: 1px dashed #b71c1c;
-            transition: all 0.3s;
         }
 
-        .card-back a:hover {
+        a:hover {
             color: #d32f2f;
             border-bottom: 1px solid #d32f2f;
         }
 
-        /* Click instruction */
-        #click-hint {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #666;
-            font-style: italic;
+        /* ---------- SPARKLES (on card) ---------- */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            animation: sparkleAnim 1.5s ease-out forwards;
+        }
+
+        @keyframes sparkleAnim {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 
 <body>
-    <canvas id="sparkles"></canvas>
 
-    <div class="card">
+    <div class="card" id="flipCard">
         <div class="card-inner">
+            <!-- FRONT -->
             <div class="card-front">
                 <h1>Alice & Bob</h1>
                 <p>June 15, 2026</p>
-                <p id="click-hint">✨ Tap to Open ✨</p>
+                <p style="margin-top:20px; font-style:italic; color:#555;">Tap to open</p>
             </div>
+
+            <!-- BACK -->
             <div class="card-back">
                 <h2>Dear <span id="guest-name">Guest</span>,</h2>
                 <p>Date: June 15, 2026</p>
@@ -166,79 +174,42 @@
             </div>
         </div>
     </div>
-    <!-- We'll add JavaScript here in a later step -->
+
     <script>
-        // Flip on click
-        const card = document.querySelector('.card');
+        /* ---------- FLIP ON CLICK ---------- */
+        const card = document.getElementById('flipCard');
         card.addEventListener('click', () => {
-            card.classList.toggle('clicked');
+            card.classList.toggle('flipped');
         });
 
-        // === SPARKLE ENGINE ===
-        const sparklesCanvas = document.getElementById('sparkles');
-        const ctx = sparklesCanvas.getContext('2d');
-        let sparkles = [];
+        /* ---------- GUEST NAME FROM URL ---------- */
+        const guestSpan = document.getElementById('guest-name');
+        const guest = new URLSearchParams(location.search).get('guest') || 'Guest';
+        guestSpan.textContent = decodeURIComponent(guest).replace(/\+/g, ' ');
 
-        function resizeCanvas() {
-            sparklesCanvas.width = window.innerWidth;
-            sparklesCanvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        /* ---------- SPARKLE ENGINE (only on card) ---------- */
+        const front = document.querySelector('.card-front');
+        const back = document.querySelector('.card-back');
 
-        class Sparkle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * sparklesCanvas.width;
-                this.y = Math.random() * sparklesCanvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.life = 0;
-                this.maxLife = Math.random() * 60 + 40;
-                this.opacity = 1;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.life++;
-                this.opacity = 1 - (this.life / this.maxLife);
-                if (this.life > this.maxLife) this.reset();
-            }
-            draw() {
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = '#ffffff';
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
+        function createSparkle(container) {
+            const s = document.createElement('div');
+            s.className = 'sparkle';
+            const size = Math.random() * 3 + 2;
+            s.style.width = s.style.height = size + 'px';
+            s.style.left = Math.random() * 100 + '%';
+            s.style.top = Math.random() * 100 + '%';
+            s.style.animationDelay = Math.random() * 1.5 + 's';
+            container.appendChild(s);
+            setTimeout(() => s.remove(), 2000);
         }
 
-        // Create 80 sparkles
-        for (let i = 0; i < 80; i++) {
-            sparkles.push(new Sparkle());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, sparklesCanvas.width, sparklesCanvas.height);
-            sparkles.forEach(s => {
-                s.update();
-                s.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        // Personalize guest name
-        const guestNameElement = document.getElementById('guest-name');
-        const guest = new URLSearchParams(window.location.search).get('guest') || 'Guest';
-        guestNameElement.textContent = decodeURIComponent(guest).replace(/\+/g, ' ');
+        /* 30 sparkles per side, re-created every 300ms */
+        [front, back].forEach(side => {
+            setInterval(() => createSparkle(side), 300);
+            for (let i = 0; i < 30; i++) createSparkle(side);
+        });
     </script>
+
 </body>
 
 </html>
